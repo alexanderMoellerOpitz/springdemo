@@ -25,6 +25,17 @@ pipeline {
             }
         }
 
+        stage('Code Quality Check') {
+            steps {
+                sh '''
+                mvn sonar:sonar \
+                  -Dsonar.projectKey=springDemo \
+                  -Dsonar.host.url=http://sonarqube.example.com \
+                  -Dsonar.login=meinToken123
+                '''
+            }
+        }
+
         stage('Package') {
             steps {
                 sh 'mvn package -DskipTests'
