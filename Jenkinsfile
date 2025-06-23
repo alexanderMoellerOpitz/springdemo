@@ -2,11 +2,9 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven 3.9.10' // Name muss in Jenkins unter "Global Tool Configuration" definiert sein
-        jdk 'JDK 17'        // Oder deine installierte JDK-Version
+        maven 'Maven 3.9.10'
+        jdk 'JDK 17'
     }
-
-//     environment {}
 
     stages {
         stage('Checkout') {
@@ -15,17 +13,17 @@ pipeline {
             }
         }
 
-        stage('Build & Test') {
+        stage('Build') {
             steps {
                 sh 'mvn clean compile'
             }
         }
 
-                stage('Test') {
-                    steps {
-                        sh 'mvn clean test'
-                    }
-                }
+        stage('Test') {
+            steps {
+                sh 'mvn test -Dspring.profiles.active=test'
+            }
+        }
 
         stage('Package') {
             steps {
