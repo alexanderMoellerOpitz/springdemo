@@ -1,8 +1,9 @@
 package com.bewerbung.springdemo.controller;
 
-import com.bewerbung.springdemo.dto.DemoEntityDto;
+import com.bewerbung.springdemo.model.dto.DemoEntityDto;
+import com.bewerbung.springdemo.model.request.CreateDemoEntityRequest;
 import com.bewerbung.springdemo.service.DemoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,13 +19,13 @@ public class DemoController {
     }
 
     @GetMapping("/getAllEntries")
-    public List<DemoEntityDto> getList() {
+    public List<DemoEntityDto> getAllEntries() {
         return demoService.getAllEntries();
     }
 
     @PostMapping("/addEntry")
-    public DemoEntityDto addEntry(@RequestParam String name) {
-        return demoService.addEntity(name);
+    public DemoEntityDto addEntry(@RequestBody @Valid CreateDemoEntityRequest createDemoEntityRequest) {
+        return demoService.addEntity(createDemoEntityRequest);
     }
 
     @PostMapping("/clearList")

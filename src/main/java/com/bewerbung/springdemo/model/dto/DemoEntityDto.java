@@ -1,9 +1,10 @@
-package com.bewerbung.springdemo.dto;
+package com.bewerbung.springdemo.model.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
-@AllArgsConstructor
+@Builder
 @Getter
 public class DemoEntityDto {
     String name;

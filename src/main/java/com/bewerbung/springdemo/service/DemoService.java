@@ -1,10 +1,10 @@
 package com.bewerbung.springdemo.service;
 
-import com.bewerbung.springdemo.dto.DemoEntityDto;
+import com.bewerbung.springdemo.model.dto.DemoEntityDto;
 import com.bewerbung.springdemo.mapper.DemoEntityMapper;
-import com.bewerbung.springdemo.model.DemoEntity;
+import com.bewerbung.springdemo.model.request.CreateDemoEntityRequest;
+import com.bewerbung.springdemo.model.entity.DemoEntity;
 import com.bewerbung.springdemo.repository.DemoEntityRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,17 +20,16 @@ public class DemoService {
     }
 
     public List<DemoEntityDto> getAllEntries() {
-        List<DemoEntity> entites = demoEntityRepository.findAll();
-        return entites.stream().map(demoEntityMapper::toDto).toList();
+        List<DemoEntity> entities = demoEntityRepository.findAll();
+        return entities.stream().map(demoEntityMapper::toDto).toList();
     }
 
     public void clearEntities() {
         demoEntityRepository.deleteAll();
     }
 
-    public DemoEntityDto addEntity(String name) {
-        DemoEntity demoEntity = new DemoEntity(name);
-        demoEntityRepository.save(demoEntity);
-        return demoEntityMapper.toDto(demoEntity);
+    public DemoEntityDto addEntity(CreateDemoEntityRequest createDemoEntityRequest) {
+        DemoEntity demoEntity = demoEntityMapper.requestToEntity(createDemoEntityRequest);
+        return demoEntityMapper.toDto(demoEntityRepository.save(demoEntity));
     }
 }
